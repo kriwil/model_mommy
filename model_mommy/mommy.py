@@ -234,7 +234,9 @@ class Mommy(object):
                 model_attrs[field.name] = self.generate_value(field, **fk_attrs)
                 continue
 
-            if not field.name in self.attr_mapping and (field.has_default() or field.blank):
+            if not field.name in self.attr_mapping and (
+                    (hasattr(field, 'has_default') and field.has_default())
+                    or field.blank):
                 continue
 
             if isinstance(field, ManyToManyField):
